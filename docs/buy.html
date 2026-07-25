@@ -88,7 +88,7 @@
               <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Anti-screenshot protection</li>
             </ul>
 
-            <button class="btn btn-primary btn-full btn-xl cashapp-checkout-btn" data-cashtag="$YourCashtag">
+            <button class="btn btn-primary btn-full btn-xl cashapp-manual-btn" data-cashtag="$YourCashtag">
               <span class="btn-text">Pay with Cash App - $25</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 12V7H5V21H19V14"/>
@@ -97,12 +97,55 @@
               </svg>
             </button>
 
+            <div class="payment-divider">
+              <span>or pay with Crypto</span>
+            </div>
+
+            <div class="crypto-options">
+              <button class="crypto-btn" data-crypto="btc">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+                <span>Bitcoin (BTC)</span>
+                <small>bc1q5a5y0jkvdd448v9dzplqlta6vz6hf6u2dmsgkq</small>
+              </button>
+              <button class="crypto-btn" data-crypto="eth">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M20.5 10.5h-5a2 2 0 0 0 0 4h5a2 2 0 0 1 0 4h-5a2 2 0 0 1 0 4h-5a2 2 0 0 0 0 4h5v4"/>
+                  <path d="M12 2v8M12 22v-8M12 14h8M8 14h8M4 12h4M20 12h-4"/>
+                </svg>
+                <span>Ethereum (ETH)</span>
+                <small>0xC380eF6DD909638Da889e7FC0B66aC88852b5D1e</small>
+              </button>
+              <button class="crypto-btn" data-crypto="sol">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span>Solana (SOL)</span>
+                <small>2sfy5ZALy3UdjjNtB8XD86TU4TLRhbGv9uVMZE46HJcM</small>
+              </button>
+            </div>
+
+            <div class="payment-instructions" id="cashappInstructions" style="display:none;">
+              <h4>Cash App Payment Instructions</h4>
+              <ol>
+                <li>Open Cash App and tap <strong>$YourCashtag</strong></li>
+                <li>Send <strong>$25.00</strong></li>
+                <li><strong>Important:</strong> In the payment note, include your <strong>email address</strong></li>
+                <li>Take a screenshot of the payment confirmation</li>
+                <li>DM the screenshot + your email in our <a href="https://discord.gg/bTq38ASNTp" target="_blank">Discord</a></li>
+                <li>We'll verify and send your license key manually</li>
+              </ol>
+              <button class="btn btn-secondary" onclick="closeCashAppInstructions()">Got it</button>
+            </div>
+
             <p class="secure-note">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="2" y="2" width="20" height="20" rx="2"/>
                 <path d="M12 15v-5M12 7v-3"/>
               </svg>
-              Secure checkout - Cash App or Crypto (BTC/USDT/XMR)
+              Manual verification - you'll receive your key via email/Discord after payment verification
             </p>
           </div>
 

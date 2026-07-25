@@ -471,10 +471,128 @@
   );
 
   // ============================================================
+// Cleanup on page unload
+// ============================================================
+  window.addEventListener('beforeunload', () => {
+    if (hexAnimationId) cancelAnimationFrame(hexAnimationId);
+  });
+
+  // ============================================================
+  // Cash App Manual Payment Modal
+  // ============================================================
+  const cashappModal = document.getElementById('cashappInstructions');
+  const cashappBtn = document.querySelector('.cashapp-manual-btn');
+  
+  if (cashappBtn && cashappModal) {
+    cashappBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      cashappModal.style.display = 'block';
+      cashappModal.style.animation = 'fadeIn 0.3s ease';
+    });
+  }
+
+  window.closeCashAppInstructions = function() {
+    if (cashappModal) {
+      cashappModal.style.display = 'none';
+    }
+  };
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (cashappModal && e.target === cashappModal) {
+      closeCashAppInstructions();
+    }
+  });
+
+  // ============================================================
+  // Crypto Address Copy
+  // ============================================================
+  document.querySelectorAll('.crypto-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const address = btn.querySelector('small').textContent;
+      navigator.clipboard.writeText(address).then(() => {
+        const originalText = btn.querySelector('small').textContent;
+        btn.querySelector('small').textContent = 'Copied!';
+        setTimeout(() => {
+          btn.querySelector('small').textContent = address;
+        }, 2000);
+      });
+    });
+  });
+
+  // ============================================================
+  // Crypto Address Copy on Click
+  // ============================================================
+  document.querySelectorAll('.crypto-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const address = btn.querySelector('small').textContent;
+      navigator.clipboard.writeText(address).then(() => {
+        const small = btn.querySelector('small');
+        const originalText = small.textContent;
+        small.textContent = 'Copied!';
+        small.style.color = '#31da8f';
+        setTimeout(() => {
+          small.textContent = originalText;
+          small.style.color = '';
+        }, 2000);
+      });
+    });
+  });
+
+// ============================================================
   // Cleanup on page unload
   // ============================================================
   window.addEventListener('beforeunload', () => {
     if (hexAnimationId) cancelAnimationFrame(hexAnimationId);
   });
 
-})();
+  // ============================================================
+  // Cash App Manual Payment Modal
+  // ============================================================
+  const cashappModal = document.getElementById('cashappInstructions');
+  const cashappBtn = document.querySelector('.cashapp-manual-btn');
+  
+  if (cashappBtn && cashappModal) {
+    cashappBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      cashappModal.style.display = 'flex';
+      cashappModal.style.animation = 'fadeIn 0.3s ease';
+    });
+  }
+
+  window.closeCashAppInstructions = function() {
+    if (cashappModal) {
+      cashappModal.style.display = 'none';
+    }
+  };
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (cashappModal && e.target === cashappModal) {
+      closeCashAppInstructions();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cashappModal && cashappModal.style.display === 'flex') {
+      closeCashAppInstructions();
+    }
+  });
+
+  // ============================================================
+  // Crypto Address Copy
+  // ============================================================
+  document.querySelectorAll('.crypto-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const address = btn.querySelector('small').textContent;
+      navigator.clipboard.writeText(address).then(() => {
+        const small = btn.querySelector('small');
+        const originalText = small.textContent;
+        small.textContent = 'Copied!';
+        setTimeout(() => {
+          small.textContent = address;
+        }, 2000);
+      });
+    });
+  });
