@@ -204,7 +204,7 @@
           <p class="section-desc">Real-time monitoring of all critical systems.</p>
         </header>
         <div class="status-grid">
-          <div class="status-card">
+          <div class="status-card" id="status-api">
             <div class="status-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="2" y="2" width="20" height="20" rx="2"/>
@@ -214,12 +214,12 @@
             <div class="status-info">
               <span class="status-label">Auth Server</span>
               <div class="status-value">
-                <span class="status-indicator online"></span>
-                <span>Online</span>
+                <span class="status-indicator online" id="dot-api"></span>
+                <span id="text-api">Online</span>
               </div>
             </div>
           </div>
-          <div class="status-card">
+          <div class="status-card" id="status-cheat">
             <div class="status-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <circle cx="12" cy="12" r="10"/>
@@ -229,26 +229,27 @@
             <div class="status-info">
               <span class="status-label">Cheat Module</span>
               <div class="status-value">
-                <span class="status-indicator online"></span>
-                <span>Online</span>
+                <span class="status-indicator online" id="dot-cheat"></span>
+                <span id="text-cheat">Online</span>
               </div>
+              <div class="status-message" id="status-cheat-msg"></div>
             </div>
           </div>
-          <div class="status-card">
+          <div class="status-card" id="status-loader">
             <div class="status-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
             </div>
             <div class="status-info">
-              <span class="status-label">HWID System</span>
+              <span class="status-label">Loader</span>
               <div class="status-value">
-                <span class="status-indicator online"></span>
-                <span>Operational</span>
+                <span class="status-indicator online" id="dot-loader"></span>
+                <span id="text-loader">Up to date</span>
               </div>
             </div>
           </div>
-          <div class="status-card">
+          <div class="status-card" id="status-update">
             <div class="status-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <circle cx="12" cy="12" r="3"/>
@@ -258,8 +259,8 @@
             <div class="status-info">
               <span class="status-label">Last Update</span>
               <div class="status-value">
-                <span>v2.4.1</span>
-                <span class="status-sub">Jul 20, 2026</span>
+                <span id="text-version">v1.0.0</span>
+                <span class="status-sub" id="text-update-date">--</span>
               </div>
             </div>
           </div>

@@ -471,128 +471,70 @@
   );
 
   // ============================================================
-// Cleanup on page unload
-// ============================================================
-  window.addEventListener('beforeunload', () => {
-    if (hexAnimationId) cancelAnimationFrame(hexAnimationId);
-  });
+  // Live Status from Backend
+  // ============================================================
+  const STATUS_API = 'https://hypocrite-unrushed-chevy.ngrok-free.dev/api/stats';
 
-  // ============================================================
-  // Cash App Manual Payment Modal
-  // ============================================================
-  const cashappModal = document.getElementById('cashappInstructions');
-  const cashappBtn = document.querySelector('.cashapp-manual-btn');
-  
-  if (cashappBtn && cashappModal) {
-    cashappBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      cashappModal.style.display = 'block';
-      cashappModal.style.animation = 'fadeIn 0.3s ease';
-    });
+  function updateStatus(data) {
+    const statusMap = {
+      api: { dot: 'dot-api', text: 'text-api', card: 'status-api' },
+      cheat: { dot: 'dot-cheat', text: 'text-cheat', card: 'status-cheat' },
+      loader: { dot: 'dot-loader', text: 'text-loader', card: 'status-loader' },
+    };
+
+    const statusLabels = { online: 'Online', offline: 'Offline', maintenance: 'Maintenance', undetected: 'Undetected', detected: 'Detected', updating: 'Updating', up_to_date: 'Up to date', update_available: 'Update Available' };
+    const statusColors = { online: '#31da8f', offline: '#ff4444', maintenance: '#ffaa00', undetected: '#31da8f', detected: '#ff4444', updating: '#ffaa00', up_to_date: '#31da8f', update_available: '#2edbf2' };
+
+    function setStatus(type, status) {
+      const el = statusMap[type];
+      if (!el) return;
+      const dot = document.getElementById(el.dot);
+      const text = document.getElementById(el.text);
+      if (dot) { dot.className = 'status-indicator'; dot.style.backgroundColor = statusColors[status] || '#888'; }
+      if (text) text.textContent = statusLabels[status] || status;
+    }
+
+    if (data.apiStatus) setStatus('api', data.apiStatus);
+    if (data.cheatStatus) setStatus('cheat', data.cheatStatus);
+    if (data.loaderStatus) setStatus('loader', data.loaderStatus);
+
+    const msgEl = document.getElementById('status-cheat-msg');
+    if (msgEl && data.cheatMessage) { msgEl.textContent = data.cheatMessage; msgEl.style.display = 'block'; }
+    else if (msgEl) msgEl.style.display = 'none';
+
+    const verEl = document.getElementById('text-version');
+    if (verEl && data.loaderVersion) verEl.textContent = 'v' + data.loaderVersion.replace(/^v/i, '');
+
+    const dateEl = document.getElementById('text-update-date');
+    if (dateEl && data.lastUpdate) {
+      const d = new Date(data.lastUpdate);
+      dateEl.textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    const keysEl = document.getElementById('totalKeys');
+    if (keysEl && data.totalKeys) keysEl.textContent = (data.totalKeys >= 1000 ? (data.totalKeys / 1000).toFixed(1) + 'k+' : data.totalKeys);
+
+    const usersEl = document.getElementById('usersOnline');
+    if (usersEl && typeof data.usersOnline === 'number') usersEl.textContent = data.usersOnline;
   }
 
-  window.closeCashAppInstructions = function() {
-    if (cashappModal) {
-      cashappModal.style.display = 'none';
-    }
-  };
-
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (cashappModal && e.target === cashappModal) {
-      closeCashAppInstructions();
-    }
-  });
-
-  // ============================================================
-  // Crypto Address Copy
-  // ============================================================
-  document.querySelectorAll('.crypto-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const address = btn.querySelector('small').textContent;
-      navigator.clipboard.writeText(address).then(() => {
-        const originalText = btn.querySelector('small').textContent;
-        btn.querySelector('small').textContent = 'Copied!';
-        setTimeout(() => {
-          btn.querySelector('small').textContent = address;
-        }, 2000);
+  function fetchStatus() {
+    fetch(STATUS_API, { mode: 'cors' })
+      .then(r => r.json())
+      .then(data => { updateStatus(data); if (window._statusOffline) { window._statusOffline = false; } })
+      .catch(() => {
+        if (!window._statusOffline) {
+          window._statusOffline = true;
+          ['api','cheat','loader'].forEach(t => {
+            const dot = document.getElementById('dot-' + t);
+            const text = document.getElementById('text-' + t);
+            if (dot) { dot.className = 'status-indicator'; dot.style.backgroundColor = '#888'; }
+            if (text) text.textContent = 'Unknown';
+          });
+        }
       });
-    });
-  });
-
-  // ============================================================
-  // Crypto Address Copy on Click
-  // ============================================================
-  document.querySelectorAll('.crypto-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const address = btn.querySelector('small').textContent;
-      navigator.clipboard.writeText(address).then(() => {
-        const small = btn.querySelector('small');
-        const originalText = small.textContent;
-        small.textContent = 'Copied!';
-        small.style.color = '#31da8f';
-        setTimeout(() => {
-          small.textContent = originalText;
-          small.style.color = '';
-        }, 2000);
-      });
-    });
-  });
-
-// ============================================================
-  // Cleanup on page unload
-  // ============================================================
-  window.addEventListener('beforeunload', () => {
-    if (hexAnimationId) cancelAnimationFrame(hexAnimationId);
-  });
-
-  // ============================================================
-  // Cash App Manual Payment Modal
-  // ============================================================
-  const cashappModal = document.getElementById('cashappInstructions');
-  const cashappBtn = document.querySelector('.cashapp-manual-btn');
-  
-  if (cashappBtn && cashappModal) {
-    cashappBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      cashappModal.style.display = 'flex';
-      cashappModal.style.animation = 'fadeIn 0.3s ease';
-    });
   }
 
-  window.closeCashAppInstructions = function() {
-    if (cashappModal) {
-      cashappModal.style.display = 'none';
-    }
-  };
+  fetchStatus();
+  setInterval(fetchStatus, 15000);
 
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (cashappModal && e.target === cashappModal) {
-      closeCashAppInstructions();
-    }
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && cashappModal && cashappModal.style.display === 'flex') {
-      closeCashAppInstructions();
-    }
-  });
-
-  // ============================================================
-  // Crypto Address Copy
-  // ============================================================
-  document.querySelectorAll('.crypto-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const address = btn.querySelector('small').textContent;
-      navigator.clipboard.writeText(address).then(() => {
-        const small = btn.querySelector('small');
-        const originalText = small.textContent;
-        small.textContent = 'Copied!';
-        setTimeout(() => {
-          small.textContent = address;
-        }, 2000);
-      });
-    });
-  });
