@@ -512,10 +512,13 @@
     }
 
     const keysEl = document.getElementById('totalKeys');
-    if (keysEl && data.totalKeys) keysEl.textContent = (data.totalKeys >= 1000 ? (data.totalKeys / 1000).toFixed(1) + 'k+' : data.totalKeys);
+    if (keysEl && typeof data.totalKeys === 'number') keysEl.textContent = data.totalKeys >= 1000 ? (data.totalKeys / 1000).toFixed(1) + 'k+' : data.totalKeys.toString();
 
     const usersEl = document.getElementById('usersOnline');
     if (usersEl && typeof data.usersOnline === 'number') usersEl.textContent = data.usersOnline;
+
+    const heroUsersEl = document.getElementById('heroUsers');
+    if (heroUsersEl && typeof data.usersOnline === 'number') heroUsersEl.textContent = data.usersOnline;
   }
 
   function fetchStatus() {

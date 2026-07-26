@@ -61,12 +61,12 @@
           </div>
           <div class="hero-stats">
             <div class="stat">
-              <span class="stat-value">2.4k+</span>
+              <span class="stat-value" id="heroUsers">0</span>
               <span class="stat-label">Active Users</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
-              <span class="stat-value">99.9%</span>
+              <span class="stat-value" id="heroUptime">99.9%</span>
               <span class="stat-label">Uptime</span>
             </div>
             <div class="stat-divider"></div>
@@ -201,7 +201,7 @@
         <header class="section-header">
           <span class="section-tag">Live Status</span>
           <h2 class="section-title">Server & <span class="highlight">Cheat Status</span></h2>
-          <p class="section-desc">Real-time monitoring of all critical systems.</p>
+          <p class="section-desc">Real-time monitoring of all systems. Updated every 15 seconds.</p>
         </header>
         <div class="status-grid">
           <div class="status-card" id="status-api">
@@ -214,8 +214,8 @@
             <div class="status-info">
               <span class="status-label">Auth Server</span>
               <div class="status-value">
-                <span class="status-indicator online" id="dot-api"></span>
-                <span id="text-api">Online</span>
+                <span class="status-indicator" id="dot-api"></span>
+                <span id="text-api">Loading...</span>
               </div>
             </div>
           </div>
@@ -229,8 +229,8 @@
             <div class="status-info">
               <span class="status-label">Cheat Module</span>
               <div class="status-value">
-                <span class="status-indicator online" id="dot-cheat"></span>
-                <span id="text-cheat">Online</span>
+                <span class="status-indicator" id="dot-cheat"></span>
+                <span id="text-cheat">Loading...</span>
               </div>
               <div class="status-message" id="status-cheat-msg"></div>
             </div>
@@ -244,8 +244,8 @@
             <div class="status-info">
               <span class="status-label">Loader</span>
               <div class="status-value">
-                <span class="status-indicator online" id="dot-loader"></span>
-                <span id="text-loader">Up to date</span>
+                <span class="status-indicator" id="dot-loader"></span>
+                <span id="text-loader">Loading...</span>
               </div>
             </div>
           </div>
@@ -274,7 +274,7 @@
           <div class="cta-glow"></div>
           <div class="cta-content">
             <h2>Ready to Dominate?</h2>
-            <p>Join 2,400+ players using Nexer. Secure your spot in the Cheat Trials today.</p>
+            <p>Join the community. Secure your spot in the Cheat Trials today.</p>
             <a href="buy.html" class="btn btn-primary btn-xl">
               <span>Purchase Access - $25</span>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
